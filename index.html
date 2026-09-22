@@ -4,6 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#101827">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Route Builder">
   <title>Na-Library Route Builder</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -25,9 +28,39 @@
         <input id="import-input" type="file" accept="application/json,.json">
       </label>
       <button id="export-button" class="button button-secondary" type="button">Export routes.json</button>
+      <div class="history-actions" aria-label="Edit history">
+        <button id="undo-button" class="button button-secondary" type="button" disabled>↶ Undo</button>
+        <button id="redo-button" class="button button-secondary" type="button" disabled>↷ Redo</button>
+      </div>
     </section>
 
-    <div id="status" class="status" role="status" aria-live="polite"></div>
+    <div class="workspace-heading">
+      <div>
+        <p class="section-kicker">Workspace</p>
+        <h2>Your routes</h2>
+      </div>
+      <p id="route-summary" class="route-summary"></p>
+    </div>
+    <div id="status" class="status" role="status" aria-live="polite">Saved on this device.</div>
+    <section class="preview card" aria-labelledby="preview-title">
+      <div class="preview-heading">
+        <div>
+          <p class="section-kicker">Preview</p>
+          <h2 id="preview-title">Selected route path</h2>
+        </div>
+        <p id="preview-summary" class="route-summary">Select a route to preview it.</p>
+      </div>
+      <div class="field-map-wrap">
+        <svg id="field-preview" class="field-map" viewBox="0 0 320 320" role="img" aria-label="Autonomous route preview" aria-describedby="preview-help"></svg>
+      </div>
+      <p id="preview-help" class="preview-help">Drag the white marker to move the robot. Drag the green handle to rotate its starting direction.</p>
+      <div class="preview-legend" aria-label="Preview legend">
+        <span><i class="legend-line"></i>Drive path</span>
+        <span><i class="legend-dot score"></i>Scoring</span>
+        <span><i class="legend-dot intake"></i>Intake</span>
+        <span><i class="legend-dot direction"></i>Start direction</span>
+      </div>
+    </section>
     <section id="route-list" class="route-list" aria-label="Routes"></section>
   </main>
   <script src="app.js"></script>
