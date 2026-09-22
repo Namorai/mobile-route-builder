@@ -42,26 +42,34 @@
       <p id="route-summary" class="route-summary"></p>
     </div>
     <div id="status" class="status" role="status" aria-live="polite">Saved on this device.</div>
-    <section class="preview card" aria-labelledby="preview-title">
-      <div class="preview-heading">
-        <div>
-          <p class="section-kicker">Preview</p>
-          <h2 id="preview-title">Selected route path</h2>
+    <div class="workspace-layout">
+      <section class="preview card" aria-labelledby="preview-title">
+        <div class="preview-heading">
+          <div>
+            <p class="section-kicker">Preview</p>
+            <h2 id="preview-title">Selected route path</h2>
+          </div>
+          <p id="preview-summary" class="route-summary">Select a route to preview it.</p>
         </div>
-        <p id="preview-summary" class="route-summary">Select a route to preview it.</p>
-      </div>
-      <div class="field-map-wrap">
-        <svg id="field-preview" class="field-map" viewBox="0 0 320 320" role="img" aria-label="Autonomous route preview" aria-describedby="preview-help"></svg>
-      </div>
-      <p id="preview-help" class="preview-help">Drag the white marker to move the robot. Drag the green handle to rotate its starting direction.</p>
-      <div class="preview-legend" aria-label="Preview legend">
-        <span><i class="legend-line"></i>Drive path</span>
-        <span><i class="legend-dot score"></i>Scoring</span>
-        <span><i class="legend-dot intake"></i>Intake</span>
-        <span><i class="legend-dot direction"></i>Start direction</span>
-      </div>
-    </section>
-    <section id="route-list" class="route-list" aria-label="Routes"></section>
+        <div class="field-map-wrap">
+          <svg id="field-preview" class="field-map" viewBox="0 0 320 320" role="img" aria-label="Autonomous route preview" aria-describedby="preview-help"></svg>
+        </div>
+        <p id="preview-help" class="preview-help">Drag the white marker to move the robot. Drag the green handle to rotate its starting direction.</p>
+        <div class="preview-legend" aria-label="Preview legend">
+          <span><i class="legend-line"></i>Drive path</span>
+          <span><i class="legend-dot score"></i>Scoring</span>
+          <span><i class="legend-dot intake"></i>Intake</span>
+          <span><i class="legend-dot direction"></i>Start direction</span>
+        </div>
+      </section>
+      <section class="route-panel" aria-labelledby="routes-title">
+        <div class="route-panel-heading">
+          <p class="section-kicker">Editor</p>
+          <h2 id="routes-title">Routes and commands</h2>
+        </div>
+        <section id="route-list" class="route-list" aria-label="Routes"></section>
+      </section>
+    </div>
   </main>
   <script src="app.js"></script>
 </body>

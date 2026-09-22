@@ -38,6 +38,8 @@ h1 { margin: 0; font-size: clamp(2rem, 8vw, 3.4rem); line-height: 1; }
 .route-summary { color: var(--muted); font-size: .9rem; margin: 0 0 2px; }
 .status { min-height: 24px; color: var(--accent); font-size: .9rem; margin: 0 4px 12px; }
 .status.error { color: var(--danger); }
+.workspace-layout { display: contents; }
+.route-panel-heading { display: none; }
 .preview { padding: 16px; margin-bottom: 18px; }
 .preview-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
 .preview-heading h2 { margin: 0; font-size: 1.1rem; }
@@ -117,6 +119,15 @@ h1 { margin: 0; font-size: clamp(2rem, 8vw, 3.4rem); line-height: 1; }
   .app-shell { padding-left: 28px; padding-right: 28px; }
   .route-list { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
   .preview { grid-column: 1 / -1; }
+}
+@media (min-width: 1101px) {
+  .app-shell { width: min(1240px, 100%); }
+  .workspace-layout { display: grid; grid-template-columns: minmax(360px, 430px) minmax(0, 1fr); align-items: start; gap: 24px; }
+  .preview { position: sticky; top: 96px; margin-bottom: 0; }
+  .route-panel { min-width: 0; }
+  .route-panel-heading { display: block; margin: 0 4px 12px; }
+  .route-panel-heading h2 { margin: 0; font-size: 1.35rem; }
+  .route-list { grid-template-columns: 1fr; }
 }
 @media (orientation: landscape) and (max-height: 600px) {
   .app-header { margin-top: 8px; margin-bottom: 14px; }
