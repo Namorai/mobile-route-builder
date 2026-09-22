@@ -23,8 +23,8 @@ button, .file-button { cursor: pointer; }
 h1 { margin: 0; font-size: clamp(2rem, 8vw, 3.4rem); line-height: 1; }
 .subtitle { color: var(--muted); margin: 12px 0 0; max-width: 580px; line-height: 1.45; }
 .card, .route-card { background: rgba(21, 31, 49, .92); border: 1px solid var(--border); border-radius: 18px; box-shadow: 0 12px 32px rgba(0,0,0,.18); }
-.toolbar { position: sticky; top: 10px; z-index: 2; display: flex; flex-wrap: wrap; gap: 10px; padding: 12px; margin-bottom: 28px; backdrop-filter: blur(16px); }
-.history-actions { display: flex; gap: 8px; margin-left: auto; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px; padding: 12px; margin-bottom: 28px; }
+.history-actions { display: flex; gap: 8px; }
 .button { border: 0; border-radius: 11px; min-height: 44px; padding: 10px 15px; color: #f8fafc; font-weight: 700; }
 .button-primary { background: var(--accent); color: #082016; }
 .button-secondary, .button-quiet { background: var(--panel-light); border: 1px solid var(--border); }
@@ -43,6 +43,7 @@ h1 { margin: 0; font-size: clamp(2rem, 8vw, 3.4rem); line-height: 1; }
 .preview { padding: 16px; margin-bottom: 18px; }
 .preview-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
 .preview-heading h2 { margin: 0; font-size: 1.1rem; }
+.preview-tools { display: grid; justify-items: end; gap: 8px; }
 .field-map-wrap { max-width: 420px; margin: 0 auto; overflow: hidden; border: 1px solid var(--border); border-radius: 12px; background: #0e1728 url("https://api.vex.com/vr/_images/center_of_toggle_positions.png") center / 100% 100% no-repeat; }
 .field-map { display: block; width: 100%; height: auto; touch-action: none; user-select: none; -webkit-user-select: none; }
 .field-background { fill: #152b2b; }
@@ -97,10 +98,15 @@ h1 { margin: 0; font-size: clamp(2rem, 8vw, 3.4rem); line-height: 1; }
 @media (max-width: 560px) {
   .app-header { align-items: center; }
   .field-grid { grid-template-columns: 1fr; }
-  .toolbar { top: 6px; }
   .toolbar .button { flex: 1 1 140px; }
-  .history-actions { width: 100%; margin-left: 0; }
-  .history-actions .button { flex: 1; }
+  .preview { position: sticky; top: 6px; z-index: 2; padding: 12px; box-shadow: 0 10px 24px rgba(0, 0, 0, .3); }
+  .preview-tools { width: 100%; justify-items: stretch; }
+  .preview-tools .route-summary { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .preview-tools .history-actions { width: 100%; }
+  .preview-tools .history-actions .button { flex: 1; }
+  .preview .field-map-wrap { max-width: 250px; }
+  .preview-help { margin-top: 7px; }
+  .preview-legend { gap: 8px; margin-top: 7px; }
   .command-picker { grid-template-columns: 1fr; }
   .picker-actions { display: grid; grid-template-columns: 1fr 1fr; }
   .picker-actions .button { width: 100%; }
