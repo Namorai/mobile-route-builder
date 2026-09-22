@@ -100,14 +100,14 @@ h1 { margin: 0; font-size: clamp(2rem, 8vw, 3.4rem); line-height: 1; }
   .app-header { align-items: center; }
   .field-grid { grid-template-columns: 1fr; }
   .toolbar .button { flex: 1 1 140px; }
-  .preview { position: sticky; top: 6px; z-index: 2; padding: 12px; box-shadow: 0 10px 24px rgba(0, 0, 0, .3); }
+  .preview { position: sticky; top: 6px; z-index: 2; padding: 10px; box-shadow: 0 10px 24px rgba(0, 0, 0, .3); }
   .preview-tools { width: 100%; justify-items: stretch; }
   .preview-tools .route-summary { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .preview-tools .history-actions { width: 100%; }
   .preview-tools .history-actions .button { flex: 1; }
-  .preview .field-map-wrap { max-width: 250px; }
-  .preview-help { margin-top: 7px; }
-  .preview-legend { gap: 8px; margin-top: 7px; }
+  .preview .field-map-wrap { max-width: 160px; }
+  .preview-help { display: none; }
+  .preview-legend { gap: 6px; margin-top: 6px; font-size: .7rem; }
   .command-picker { grid-template-columns: 1fr; }
   .picker-actions { display: grid; grid-template-columns: 1fr 1fr; }
   .picker-actions .button { width: 100%; }
@@ -139,4 +139,11 @@ h1 { margin: 0; font-size: clamp(2rem, 8vw, 3.4rem); line-height: 1; }
 @media (orientation: landscape) and (max-height: 600px) {
   .app-header { margin-top: 8px; margin-bottom: 14px; }
   .toolbar { top: 4px; }
+}
+@media (pointer: coarse) and (orientation: landscape) and (max-height: 600px) {
+  .workspace-layout { display: contents; }
+  .preview { position: sticky; top: 4px; z-index: 2; padding: 8px; }
+  .preview .field-map-wrap { max-width: 130px; }
+  .preview-heading { margin-bottom: 6px; }
+  .preview-legend { display: none; }
 }
