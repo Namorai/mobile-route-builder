@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101827">
+  <title>Na-Library Route Builder</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">VEX V5 · Na-Library</p>
+        <h1>Route Builder</h1>
+        <p class="subtitle">Build an autonomous route on your phone, then export it for VS Code.</p>
+      </div>
+      <button id="reset-button" class="button button-quiet" type="button">Reset</button>
+    </header>
+
+    <section class="toolbar card" aria-label="Route actions">
+      <button id="add-route-button" class="button button-primary" type="button">＋ New route</button>
+      <label class="button button-secondary file-button">
+        Import JSON
+        <input id="import-input" type="file" accept="application/json,.json">
+      </label>
+      <button id="export-button" class="button button-secondary" type="button">Export routes.json</button>
+    </section>
+
+    <div id="status" class="status" role="status" aria-live="polite"></div>
+    <section id="route-list" class="route-list" aria-label="Routes"></section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
