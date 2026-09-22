@@ -1,3 +1,4 @@
+// Updated 2026-09-22: refresh GitHub Pages deployment.
 const STORAGE_KEY = "na-library-routes";
 const PREVIEW_STARTS_KEY = "na-library-preview-starts";
 const FIELD_SIZE_MM = 3560;
