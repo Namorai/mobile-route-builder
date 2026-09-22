@@ -38,7 +38,9 @@ const status = document.querySelector("#status");
 const routeSummary = document.querySelector("#route-summary");
 const previewSummary = document.querySelector("#preview-summary");
 const fieldPreview = document.querySelector("#field-preview");
+const previewCard = document.querySelector(".preview");
 let selectedRouteId = null;
+let previewStickyThreshold = null;
 
 function clone(value) { return JSON.parse(JSON.stringify(value)); }
 function slug(value) {
@@ -442,8 +444,9 @@ function previewStart(route) {
 
 function pointerToField(event) {
   const bounds = fieldPreview.getBoundingClientRect();
-  const svgX = ((event.clientX - bounds.left) / bounds.width) * FIELD_VIEW_SIZE;
-  const svgY = ((event.clientY - bounds.top) / bounds.height) * FIELD_VIEW_SIZE;
+  const [viewX, viewY, viewSize] = fieldPreview.getAttribute("viewBox").split(" ").map(Number);
+  const svgX = viewX + ((event.clientX - bounds.left) / bounds.width) * viewSize;
+  const svgY = viewY + ((event.clientY - bounds.top) / bounds.height) * viewSize;
   return {
     x: Math.max(-FIELD_SIZE_MM / 2, Math.min(FIELD_SIZE_MM / 2, svgX / FIELD_VIEW_SIZE * FIELD_SIZE_MM - FIELD_SIZE_MM / 2)),
     y: Math.max(-FIELD_SIZE_MM / 2, Math.min(FIELD_SIZE_MM / 2, FIELD_SIZE_MM / 2 - svgY / FIELD_VIEW_SIZE * FIELD_SIZE_MM))
@@ -483,6 +486,32 @@ function renderPreview() {
     }
   });
   const path = points.map((point, index) => `${index ? "L" : "M"}${point.x.toFixed(1)} ${point.y.toFixed(1)}`).join(" ");
+  let routeSize = FIELD_VIEW_SIZE;
+  let viewMinX = 0;
+  let viewMinY = 0;
+  if (previewCard.classList.contains("preview-following")) {
+    const xValues = points.map((point) => point.x);
+    const yValues = points.map((point) => point.y);
+    const routeMinX = Math.min(...xValues);
+    const routeMaxX = Math.max(...xValues);
+    const routeMinY = Math.min(...yValues);
+    const routeMaxY = Math.max(...yValues);
+    routeSize = Math.min(FIELD_VIEW_SIZE, Math.max(routeMaxX - routeMinX, routeMaxY - routeMinY) + 48);
+    const centerX = (routeMinX + routeMaxX) / 2;
+    const centerY = (routeMinY + routeMaxY) / 2;
+    viewMinX = Math.max(0, Math.min(FIELD_VIEW_SIZE - routeSize, centerX - routeSize / 2));
+    viewMinY = Math.max(0, Math.min(FIELD_VIEW_SIZE - routeSize, centerY - routeSize / 2));
+  }
+  fieldPreview.setAttribute("viewBox", `${viewMinX} ${viewMinY} ${routeSize} ${routeSize}`);
+  const mapWrap = document.querySelector(".field-map-wrap");
+  if (routeSize < FIELD_VIEW_SIZE) {
+    const imageScale = FIELD_VIEW_SIZE / routeSize;
+    mapWrap.style.backgroundSize = `${imageScale * 100}% ${imageScale * 100}%`;
+    mapWrap.style.backgroundPosition = `${(viewMinX / (FIELD_VIEW_SIZE - routeSize)) * 100}% ${(viewMinY / (FIELD_VIEW_SIZE - routeSize)) * 100}%`;
+  } else {
+    mapWrap.style.backgroundSize = "100% 100%";
+    mapWrap.style.backgroundPosition = "center";
+  }
   fieldPreview.append(svgElement("path", { d: path, class: "preview-path" }));
   const directionRadians = start.heading * Math.PI / 180;
   const directionEnd = {
@@ -496,6 +525,24 @@ function renderPreview() {
   const northLabel = svgElement("text", { x: 12, y: 24, class: "field-label" });
   northLabel.textContent = "N";
   fieldPreview.append(northLabel);
+}
+
+function updatePreviewFollowMode() {
+  if (window.innerWidth > 699 || !previewCard) return;
+  const currentlyFollowing = previewCard.classList.contains("preview-following");
+  const previewRect = previewCard.getBoundingClientRect();
+  if (!currentlyFollowing && previewRect.top > 6) {
+    previewStickyThreshold = previewRect.top + window.scrollY - 6;
+  }
+  if (previewStickyThreshold === null) return;
+  const hysteresis = 48;
+  const following = currentlyFollowing
+    ? window.scrollY > previewStickyThreshold - hysteresis
+    : window.scrollY > previewStickyThreshold + hysteresis;
+  if (currentlyFollowing !== following) {
+    previewCard.classList.toggle("preview-following", following);
+    renderPreview();
+  }
 }
 
 fieldPreview.addEventListener("pointerdown", (event) => {
@@ -531,6 +578,8 @@ fieldPreview.addEventListener("pointerup", (event) => {
   fieldPreview.releasePointerCapture(event.pointerId);
   setStatus(dragType === "heading" ? "Preview start direction saved." : "Preview start position saved.");
 });
+window.addEventListener("scroll", updatePreviewFollowMode, { passive: true });
+window.addEventListener("resize", updatePreviewFollowMode);
 
 document.querySelector("#add-route-button").addEventListener("click", () => {
   checkpoint();
@@ -593,3 +642,4 @@ document.querySelector("#redo-button").addEventListener("click", () => {
 
 render();
 updateHistoryButtons();
+updatePreviewFollowMode();

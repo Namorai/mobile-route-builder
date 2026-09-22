@@ -40,6 +40,7 @@ h1 { margin: 0; font-size: clamp(2rem, 8vw, 3.4rem); line-height: 1; }
 .status { min-height: 24px; color: var(--accent); font-size: .9rem; margin: 0 4px 12px; }
 .status.error { color: var(--danger); }
 .workspace-layout { display: contents; }
+.preview-slot { display: contents; }
 .route-panel-heading { display: none; }
 .preview { padding: 16px; margin-bottom: 18px; }
 .preview-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
@@ -100,14 +101,19 @@ h1 { margin: 0; font-size: clamp(2rem, 8vw, 3.4rem); line-height: 1; }
   .app-header { align-items: center; }
   .field-grid { grid-template-columns: 1fr; }
   .toolbar .button { flex: 1 1 140px; }
+  .preview-slot { display: block; min-height: 480px; }
   .preview { position: sticky; top: 6px; z-index: 2; padding: 10px; box-shadow: 0 10px 24px rgba(0, 0, 0, .3); }
+  .preview.preview-following { position: fixed; top: 6px; left: 16px; right: 16px; width: auto; }
   .preview-tools { width: 100%; justify-items: stretch; }
   .preview-tools .route-summary { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .preview-tools .history-actions { width: 100%; }
   .preview-tools .history-actions .button { flex: 1; }
-  .preview .field-map-wrap { max-width: 160px; }
-  .preview-help { display: none; }
-  .preview-legend { gap: 6px; margin-top: 6px; font-size: .7rem; }
+  .preview .field-map-wrap { max-width: 260px; }
+  .preview-help { margin-top: 7px; }
+  .preview-legend { gap: 8px; margin-top: 7px; font-size: .7rem; }
+  .preview.preview-following .field-map-wrap { max-width: 120px; }
+  .preview.preview-following .preview-help,
+  .preview.preview-following .preview-legend { display: none; }
   .command-picker { grid-template-columns: 1fr; }
   .picker-actions { display: grid; grid-template-columns: 1fr 1fr; }
   .picker-actions .button { width: 100%; }
@@ -130,7 +136,8 @@ h1 { margin: 0; font-size: clamp(2rem, 8vw, 3.4rem); line-height: 1; }
 @media (min-width: 900px) {
   .app-shell { width: min(1240px, 100%); }
   .workspace-layout { display: grid; grid-template-columns: minmax(360px, 430px) minmax(0, 1fr); align-items: start; gap: 24px; }
-  .preview { position: sticky; top: 96px; margin-bottom: 0; }
+  .preview-slot { display: block; position: sticky; top: 96px; align-self: start; }
+  .preview { position: static; margin-bottom: 0; }
   .route-panel { min-width: 0; }
   .route-panel-heading { display: block; margin: 0 4px 12px; }
   .route-panel-heading h2 { margin: 0; font-size: 1.35rem; }
